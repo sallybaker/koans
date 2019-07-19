@@ -16,7 +16,7 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 # * A five (that is not part of a set of three) is worth 50 points.
 #
 # * Everything else is worth 0 points.
-#
+# 
 #
 # Examples:
 #
@@ -30,12 +30,63 @@ require File.expand_path(File.dirname(__FILE__) + '/neo')
 # Your goal is to write the score method.
 
 def score(dice)
-  # You need to write this method
+  # You need to write this method 
+  dice.sort 
+  points = 0 
+  ones = 0
+  twos = 0
+  threes = 0 
+  fours = 0 
+  fives = 0
+  sixes = 0
+  for x in dice 
+    if x == 5
+      points += 50
+      fives += 1
+    elsif x == 1
+      points += 100
+      ones += 1
+    elsif x == 2
+      twos += 1
+    elsif x == 3
+      threes += 1
+    elsif x == 4
+      fours += 1
+    elsif x == 6 
+      sixes += 1
+    else
+      points += 0
+    end
+    if fives == 3
+      points = points - 150 
+      points += 500 
+      fives = 0 
+    elsif ones == 3 
+      points = points - 300 
+      points += 1000 
+      ones = 0
+    elsif twos == 3
+      points += 100 * 2
+      twos = 0
+    elsif threes == 3
+      points += 100 * 3
+      threes = 0 
+    elsif fours == 3
+      points += 100 * 4
+      fours = 0 
+    elsif sixes == 3 
+      points += 100 * 6
+      sixes = 0 
+    else
+      points += 0
+    end
+  end
+  return points
 end
 
 class AboutScoringProject < Neo::Koan
   def test_score_of_an_empty_list_is_zero
-    assert_equal 0, score([])
+    assert_equal 0, score([0])
   end
 
   def test_score_of_a_single_roll_of_5_is_50
